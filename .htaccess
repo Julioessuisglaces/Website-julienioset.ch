@@ -1,0 +1,88 @@
+ErrorDocument 404 /404.html
+AddType image/avif .avif
+AddType image/webp .webp
+AddType audio/mpeg .mp3
+AddDefaultCharset utf-8
+Options -Indexes
+
+# Rules are limited to the public domain (julienioset.ch); the CMS (cms.julienioset.ch) is a separate site with its own .htaccess
+DirectoryIndex index.html index.php
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# One address: https://julienioset.ch (no www, no http)
+RewriteCond %{HTTP_HOST} ^(www\.)?julienioset\.ch$ [NC]
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^(.*)$ https://julienioset.ch/$1 [R=301,L]
+
+# The CMS is only reachable on its subdomain
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^(cms/|wp-admin|wp-login\.php|wp-json)(.*)$ https://cms.julienioset.ch/$1$2 [R=301,L]
+
+# Pages removed with the switch to the one-pager
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^gouvernance-de-marque/?$ /qui-doit-decider-pour-la-marque/ [R=301,NE,L]
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^positionnement-de-marque/?$ /qualite-positionnement-industrie/ [R=301,NE,L]
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^strategie-prix-et-valeur-de-marque/?$ /rabais-gouvernance-prix-industrie-suisse/ [R=301,NE,L]
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^livre-blanc-la-valeur-de-marque/?$ /#ressources [R=301,NE,L]
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^courbe-adoption-produits-nouveaux/?$ / [R=301,NE,L]
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^blog/?$ /insights/ [R=301,NE,L]
+
+# Rules carried over from the WordPress Redirection plugin
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^positionnement-de-marque-b2b/?$ /qualite-positionnement-industrie/ [R=301,L]
+# Short link to the former white paper (Redirect Redirection plugin)
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^valeurdemarque/?$ /#ressources [R=301,NE,L]
+# Old articles deliberately removed: "410 Gone" tells search engines to drop them for good
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^(le-piege-de-la-double-casquette|deconstruire-les-evidences|strategy-is-not-taught-enough|branding-vs-brand-management|encore-une-histoire-a-2-balle|la-taupe|le-marketing-est-un-placebo|si-cest-inconfortable-cest-que-je-grandis|une-marque-floue)/?$ - [G,L]
+
+# Former WordPress addresses
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^(category|tag)/ /insights/ [R=301,L]
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^author/ /#apropos [R=301,NE,L]
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^(feed|comments/feed)/?$ /insights/ [R=301,L]
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^[0-9]{4}/([0-9]{2}/)?$ /insights/ [R=301,L]
+RewriteCond %{HTTP_HOST} ^julienioset\.ch$ [NC]
+RewriteRule ^(sitemap_index|post-sitemap|page-sitemap|category-sitemap)\.xml$ /sitemap.xml [R=301,L]
+</IfModule>
+
+# Former white paper PDFs (WordPress Redirection plugin). The uploads folder has its own .htaccess with
+# rewrite rules (image plugin), which overrides the rules above there, so these use mod_alias instead.
+RedirectMatch 301 (?i)^/wp-content/uploads/2026/09/(ios_j-la-valeur-de-marque-b2b__f-1|la-valeur-de-marque-en-b2b)\.pdf$ https://julienioset.ch/#ressources
+
+# Browser cache: assets a month, HTML always fresh
+<IfModule mod_expires.c>
+ExpiresActive on
+ExpiresDefault A0
+ExpiresByType text/html A0
+ExpiresByType text/css A2592000
+ExpiresByType text/javascript A2592000
+ExpiresByType application/javascript A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/png A2592000
+ExpiresByType image/webp A2592000
+ExpiresByType image/avif A2592000
+ExpiresByType image/svg+xml A2592000
+ExpiresByType image/x-icon A2592000
+ExpiresByType font/woff2 A2592000
+ExpiresByType audio/mpeg A2592000
+ExpiresByType application/pdf A2592000
+</IfModule>
+# Stylesheet, script and fonts change name (version tag) when they change: cache them for a year
+<IfModule mod_headers.c>
+<FilesMatch "\.(css|js|woff2)$">
+Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
+</IfModule>

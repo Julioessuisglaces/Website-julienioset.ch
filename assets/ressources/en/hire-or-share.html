@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hire or share?</title>
+<style>
+:root{
+  --paper:#ffffff; --ink:#080808; --soft:#5c5c5c; --line:#d9d9d9; --wash:#f5f4f2;
+  --brand:#8c322a; --block:#080808; --on-block:#ffffff; --on-block-soft:#c9c9c9;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#080808; --ink:#f2f2f2; --soft:#a8a8a8; --line:#3a3a3a; --wash:#202020;
+    --brand:#d0685d; --block:#f2f2f2; --on-block:#080808; --on-block-soft:#555555;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#080808; --ink:#f2f2f2; --soft:#a8a8a8; --line:#3a3a3a; --wash:#202020;
+  --brand:#d0685d; --block:#f2f2f2; --on-block:#080808; --on-block-soft:#555555;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);
+  font-family:"Jost","Futura","Century Gothic","Trebuchet MS",sans-serif;font-size:1.0625rem;line-height:1.55}
+.page{max-width:60rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+.mast{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;border-bottom:1px solid var(--ink);padding-bottom:.75rem;margin-bottom:3rem;font-size:.8125rem;letter-spacing:.18em;text-transform:uppercase}
+.mast b{font-weight:500;letter-spacing:.22em}
+.mast span{color:var(--soft);text-align:right}
+h1{color:#080808;font-weight:600;font-size:clamp(2.1rem,6vw,3.4rem);line-height:1.08;margin:0 0 1.25rem;letter-spacing:-.01em}
+h2{color:#080808;font-weight:700;font-size:1.5rem;line-height:1.2;margin:0 0 .5rem}
+h3{font-weight:700;font-size:1.125rem;margin:0}
+p{margin:0 0 1rem;max-width:38rem}
+.lead{font-size:1.1875rem;color:var(--soft)}
+.duo{display:grid;grid-template-columns:1fr 1fr;margin-top:3rem;border:1px solid var(--ink)}
+.col{padding:1.5rem;display:flex;flex-direction:column}
+.col + .col{border-left:1px solid var(--ink)}
+.col header{margin-bottom:1rem}
+.col header p{color:var(--soft);font-size:.9375rem;margin:.15rem 0 0}
+.row{padding:.85rem 0;border-top:1px solid var(--line)}
+.row label{display:flex;justify-content:space-between;gap:1rem;align-items:baseline}
+.row output{font-weight:500;white-space:nowrap;font-variant-numeric:tabular-nums}
+.row small{display:block;color:var(--soft);font-size:.875rem;line-height:1.35;margin-top:.15rem}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:1.5rem;background:transparent;margin:.35rem 0 0;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--ink)}
+input[type=range]::-moz-range-track{height:2px;background:var(--ink)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1.1rem;height:1.1rem;border-radius:50%;background:var(--brand);border:2px solid var(--paper);margin-top:-.5rem}
+input[type=range]::-moz-range-thumb{width:1.1rem;height:1.1rem;border-radius:50%;background:var(--brand);border:2px solid var(--paper)}
+input[type=range]:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.tot{margin-top:auto;padding-top:1.25rem;border-top:1px solid var(--ink)}
+.tot div{font-size:.8125rem;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.tot strong{display:block;font-weight:300;font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.15;font-variant-numeric:tabular-nums}
+.tot span{color:var(--soft);font-size:.9375rem}
+.gap{background:var(--block);color:var(--on-block);padding:1.75rem 1.5rem;border:1px solid var(--ink);border-top:0}
+.gap .cap{font-size:.8125rem;letter-spacing:.2em;text-transform:uppercase;color:var(--on-block-soft)}
+.gap .sum{font-size:clamp(2.2rem,8vw,3.6rem);font-weight:300;line-height:1.1;margin:.4rem 0 .5rem;font-variant-numeric:tabular-nums}
+.gap p{margin:0;max-width:44rem}
+.part{margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+.part > p{color:var(--soft)}
+/* Seuil */
+.scale{position:relative;height:6.5rem;margin:2.5rem 0 0}
+.track{position:absolute;left:0;right:0;top:3rem;height:10px;background:var(--wash);border:1px solid var(--line)}
+.fill{position:absolute;left:0;top:3rem;height:10px;background:var(--brand)}
+.pin{position:absolute;top:0;bottom:1.5rem;width:0;border-left:1px solid var(--ink)}
+.pin b{position:absolute;top:0;left:.4rem;font-weight:500;font-size:.9375rem;white-space:nowrap;line-height:1.2}
+.pin.flip b{left:auto;right:.4rem;text-align:right}
+.pin small{display:block;font-weight:400;color:var(--soft)}
+.pin.you{border-left-color:var(--brand);top:3rem;bottom:0}
+.pin.you b{top:auto;bottom:0;color:var(--brand);font-weight:800}
+.ticks{display:flex;justify-content:space-between;font-size:.8125rem;color:var(--soft);margin-top:.25rem}
+.cases{display:grid;grid-template-columns:1fr 1fr;gap:0 3rem;margin-top:1rem}
+.cases ul{margin:.5rem 0 0;padding:0;list-style:none}
+.cases li{padding:.7rem 0;border-top:1px solid var(--line)}
+.next{background:var(--wash);padding:1.75rem 1.5rem;margin-top:3rem}
+.next a{color:var(--ink);font-weight:500;text-underline-offset:.2em}
+.next a:hover{color:var(--brand)}
+.note{font-size:.9375rem;color:var(--soft);margin-top:2rem;max-width:44rem}
+footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--ink);font-size:.875rem;color:var(--soft);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 1.5rem}
+@media (max-width:44rem){
+  .duo,.cases{grid-template-columns:1fr}
+  .col + .col{border-left:0;border-top:1px solid var(--ink)}
+  .mast span{display:none}
+  .col,.gap,.next{padding:1.5rem 1rem}
+  .cases > div + div{margin-top:2rem}
+}
+@media print{
+  .gap{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{padding:0;max-width:none}
+  body{font-size:10.5pt}
+}
+
+/* Website brand design: Manrope text, EB Garamond titles, oxblood accent, site buttons */
+:root{--paper:#FEFEFE;--ink:#080808;--soft:#717171;--line:#E6E3E0;--wash:#F3F3F3;--brand:#9E2A2B;--block:#080808;--on-block:#FFFFFF;--on-block-soft:#C9C9C9}
+body{font-family:"Manrope","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.75;font-weight:300;color:#4A4A4A}
+.mast{align-items:center;border-bottom:1px solid var(--line);padding-bottom:1rem;font-family:"Manrope",Arial,sans-serif;font-size:11px;letter-spacing:.18em}
+.mast a{display:inline-flex}
+.mast img{height:34px;width:auto}
+.mast span{color:var(--brand);font-weight:700}
+h1{font-family:"EB Garamond",Georgia,"Times New Roman",serif;font-weight:400;color:#080808;font-size:clamp(34px,4.6vw,50px);line-height:1.2;letter-spacing:normal}
+h2{font-family:"EB Garamond",Georgia,"Times New Roman",serif;font-weight:400;color:#080808;font-size:clamp(26px,3vw,32px);line-height:1.25}
+h3{font-family:"Manrope",Arial,sans-serif;font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.lead{font-size:16px;color:var(--soft)}
+legend,.field label,.row label,.leaks b{font-weight:500;color:var(--ink)}
+.inp{border-color:#D9D9D9}
+button,.btn{display:inline-flex;align-items:center;justify-content:center;padding:18px 35px;border:0;border-radius:0;background:var(--block);color:#fff;
+  font-family:"Manrope",Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:opacity .54s ease}
+button:hover,.btn:hover{background:var(--block);color:#fff;opacity:.7}
+button.quiet{padding:17px 34px;background:transparent;color:var(--ink);border:1px solid var(--ink)}
+button.quiet:hover{background:transparent;color:var(--ink)}
+.stmt,.duo{border-color:var(--line)}
+.col + .col,.gap{border-color:var(--line)}
+.tot{border-top-color:var(--ink)}
+.stmt-head .cap,.gap .cap,.tot div{color:var(--on-block-soft);font-weight:500;font-size:11px}
+.tot div{color:var(--brand);font-weight:600}
+.stmt-head .sum,.gap .sum,.tot strong{font-family:"EB Garamond",Georgia,serif;font-weight:500;font-variant-numeric:lining-nums}
+.next{border-top:2px solid var(--brand)}
+.next .btn,.next a.btn:hover{margin-top:1.25rem;color:#fff;text-decoration:none}
+footer{border-top-color:var(--line);font-size:12px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--brand:#9E2A2B}}
+</style>
+<style>@font-face{font-family:"EB Garamond";font-style:normal;font-weight:400 500;font-display:swap;src:url("/assets/fonts/eb-garamond-normal-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:"EB Garamond";font-style:normal;font-weight:400 500;font-display:swap;src:url("/assets/fonts/eb-garamond-normal-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:"Manrope";font-style:normal;font-weight:200 800;font-display:swap;src:url(/assets/fonts/manrope-normal-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:"Manrope";font-style:normal;font-weight:200 800;font-display:swap;src:url(/assets/fonts/manrope-normal-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}</style>
+</head>
+<body>
+<div class="page">
+  <header class="mast"><a href="https://julienioset.ch/en/" aria-label="Julien Ioset, home"><img src="/assets/images/logo-julien-ioset.svg" alt="Julien Ioset" width="160" height="34"></a><span>Fractional CMO</span></header>
+
+  <h1>Hire or share?</h1>
+  <p class="lead">Your SME needs marketing direction. The question is in what form. This page compares the real cost of a salaried marketing director with that of a fractional director, over the first year.</p>
+  <p>A salaried marketing director usually costs between CHF 140,000 and 200,000 a year, including social charges. The starting values come from the Swiss market. Adjust them to your situation: everything recalculates.</p>
+
+  <div class="duo">
+    <section class="col" aria-labelledby="h-e">
+      <header><h3 id="h-e">Hire</h3><p>A salaried, full-time marketing director</p></header>
+      <div id="f-e"></div>
+      <div class="tot"><div>First-year cost</div><strong id="t-e"></strong><span id="s-e"></span></div>
+    </section>
+    <section class="col" aria-labelledby="h-p">
+      <header><h3 id="h-p">Share</h3><p>An external marketing director, a few days a month</p></header>
+      <div id="f-p"></div>
+      <div class="tot"><div>First-year cost</div><strong id="t-p"></strong><span id="s-p"></span></div>
+    </section>
+  </div>
+  <div class="gap" aria-live="polite">
+    <div class="cap" id="g-cap"></div>
+    <div class="sum" id="g-sum"></div>
+    <p id="g-txt"></p>
+  </div>
+
+  <div class="part">
+    <h2>The point where hiring pays off</h2>
+    <p id="be-txt"></p>
+    <div class="scale" aria-hidden="true">
+      <div class="track"></div><div class="fill" id="fill"></div>
+      <div class="pin" id="pin-be"><b>Threshold<small id="be-lab"></small></b></div>
+      <div class="pin you" id="pin-you"><b id="you-lab"></b></div>
+    </div>
+    <div class="ticks"><span>0</span><span>Days of marketing direction per month</span><span>18</span></div>
+  </div>
+
+  <div class="part">
+    <h2>What the numbers don’t say</h2>
+    <p>Cost isn’t the only factor. Here is when each option is the right one.</p>
+    <div class="cases">
+      <div>
+        <h3>Hire if</h3>
+        <ul>
+          <li>You already have three or more marketing people to manage every day.</li>
+          <li>Your market demands a daily presence: continuous launches, trade fairs, a distribution network to support.</li>
+          <li>Your need stays above the threshold shown above.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Share if</h3>
+        <ul>
+          <li>You lack strategy, not hands: positioning, value arguments, priorities.</li>
+          <li>Marketing currently rests on you, on a junior profile or on an agency with no one in charge.</li>
+          <li>You want a commitment you can stop if results don’t follow.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="next">
+    <h2>Check what suits your company</h2>
+    <p>A 30-minute call is enough to estimate how many days you really need, and to tell you frankly whether a salaried hire would suit you better.</p>
+    <p style="margin:0">Write to <a href="mailto:j.ioset@julienioset.ch?subject=Hire%20or%20share%3A%20call%20request">j.ioset@julienioset.ch</a> ou visit <a href="https://julienioset.ch/en/" target="_blank" rel="noopener">julienioset.ch</a>.</p>
+    <a class="btn" href="https://meetings-eu1.hubspot.com/julien-ioset" target="_blank" rel="noopener">Book a call</a>
+  </div>
+
+  <p class="note">Sources and assumptions. Starting salary: 2026 Swiss median for a Head of Marketing, excluding bonus (Robert Half, Salary Guide 2026). Employer charges, bonus, recruitment and workplace costs are estimates to check with your fiduciary. A full-time role represents about 220 working days a year, or 18 a month. The first-year cost includes recruitment; later years do not. Amounts rounded to the nearest hundred francs.</p>
+
+  <footer><span>© 2026 Julien Ioset Consulting</span><span>Indicative comparison</span></footer>
+</div>
+
+<script>
+(function(){
+  // === Valeurs de départ. TARIF_JOUR et JOURS_MOIS : à régler sur l'offre réelle. ===
+  var E=[
+    {id:'sal', label:"Annual gross salary", min:100000, max:260000, step:500, val:136500, unit:'chf', hint:"2026 Swiss median: CHF 136,500"},
+    {id:'chg', label:"Employer charges", min:10, max:25, step:.5, val:17, unit:'pct', hint:"AHV, pension fund, insurance: estimate"},
+    {id:'bon', label:"Bonus", min:0, max:30, step:1, val:10, unit:'pct', hint:"As a percentage of salary"},
+    {id:'rec', label:"Recruitment costs", min:0, max:35, step:1, val:20, unit:'pct', hint:"Agency or internal time, first year only"},
+    {id:'pst', label:"Workplace, tools and training", min:0, max:25000, step:500, val:8000, unit:'chf', hint:"Per year"}
+  ];
+  var P=[
+    {id:'jrs', label:"Days per month", min:1, max:12, step:.5, val:3, unit:'j', hint:"Time with management, steering agencies and the team"},
+    {id:'trf', label:"Daily rate", min:1000, max:2600, step:50, val:1800, unit:'chf', hint:"Fees, with no social charges or workplace costs"},
+    {id:'mois', label:"Engagement length", min:3, max:12, step:1, val:12, unit:'m', hint:"Over the first twelve months"}
+  ];
+  var $=function(id){return document.getElementById(id)};
+  function chf(v){
+    var n=Math.round(v/100)*100, s=String(Math.abs(n)).replace(/\B(?=(\d{3})+(?!\d))/g,",");
+    return "CHF\u00a0"+s;
+  }
+  function dec(v){return (Math.round(v*10)/10).toString()}
+  function show(f,v){
+    if(f.unit==='chf') return chf(v);
+    if(f.unit==='pct') return dec(v)+"\u00a0%";
+    if(f.unit==='j') return dec(v)+(v>1?" days":" day");
+    return v+(v>1?" months":" month");
+  }
+  function build(host,list){
+    $(host).innerHTML=list.map(function(f){
+      return '<div class="row"><label for="'+f.id+'"><span>'+f.label+'</span><output id="o-'+f.id+'" for="'+f.id+'"></output></label>'+
+        '<input type="range" id="'+f.id+'" min="'+f.min+'" max="'+f.max+'" step="'+f.step+'" value="'+f.val+'">'+
+        '<small>'+f.hint+'</small></div>';
+    }).join('');
+  }
+  build('f-e',E); build('f-p',P);
+  var ALL=E.concat(P);
+
+  function calc(){
+    var v={};
+    ALL.forEach(function(f){v[f.id]=Number($(f.id).value); $('o-'+f.id).textContent=show(f,v[f.id]);});
+    var run=v.sal*(1+v.chg/100+v.bon/100)+v.pst;      // coût annuel récurrent
+    var y1=run+v.sal*v.rec/100;                        // première année
+    var shared=v.jrs*v.trf*v.mois;
+    var diff=y1-shared;
+    var be=y1/(12*v.trf);                              // jours/mois où les deux coûts se rejoignent
+
+    $('t-e').textContent=chf(y1);
+    $('s-e').textContent="Then "+chf(run)+" a year, or "+chf(run/220)+" per working day";
+    $('t-p').textContent=chf(shared);
+    $('s-p').textContent=dec(v.jrs*v.mois)+" days over "+v.mois+" months, no exit costs";
+
+    if(diff>0){
+      $('g-cap').textContent="Difference in favour of sharing, first year";
+      $('g-sum').textContent=chf(diff);
+      $('g-txt').textContent = v.jrs<=be*.5
+        ? "At this level of need, sharing costs "+Math.round(shared/y1*100)+"% of a salaried hire. The difference pays for the actions themselves: agency, content, trade fairs."
+        : "Sharing is still cheaper, but the gap is narrowing. At this pace, a salaried hire is worth considering for the following year.";
+    }else{
+      $('g-cap').textContent="Difference in favour of hiring, first year";
+      $('g-sum').textContent=chf(-diff);
+      $('g-txt').textContent="At this number of days, hiring becomes the economic choice. A fractional director can still help prepare the role and recruit the right person.";
+    }
+
+    $('be-txt').textContent="With these figures, both options cost the same from "+dec(be)+" days a month. Below that, you pay for a full-time role to cover a part-time need.";
+    var MAX=18, pb=Math.min(be,MAX)/MAX*100, py=Math.min(v.jrs,MAX)/MAX*100;
+    $('fill').style.width=py+'%';
+    $('pin-be').style.left=pb+'%'; $('pin-you').style.left=py+'%';
+    $('pin-be').classList.toggle('flip',pb>70);
+    $('pin-you').classList.toggle('flip',py>70);
+    $('be-lab').textContent=dec(be)+" days a month";
+    $('you-lab').textContent="Your need: "+dec(v.jrs)+(v.jrs>1?" days":" day");
+  }
+  ALL.forEach(function(f){$(f.id).addEventListener('input',calc)});
+  calc();
+})();
+</script>
+</body>
+</html>

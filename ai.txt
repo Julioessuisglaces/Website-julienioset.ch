@@ -1,0 +1,6 @@
+# AI crawlers are welcome: julienioset.ch may be read, cited and summarised.
+# Lead magnets (/assets/ressources/) are sent by e-mail and are not for training or citation.
+
+User-agent: *
+Allow: /
+Disallow: /assets/ressources/
